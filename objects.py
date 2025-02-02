@@ -1161,6 +1161,94 @@ class trajectoryDirWithForceExtension:
        plt.savefig(f'{self.realpath}/plot.png')
        #plt.show()     
 
+class pearsonCorrelationTensor:
+    def __init__(self, pathToNumpyFiles):
+        self.dir = pathToNumpyFiles
+        self.files = functions.sortFilePaths(glob(f"{self.dir}/*npy"))
+
+    def getFrame(self, i):
+        return np.load(self.files[i])
+
+    def getFrameEdges(self, i):
+        frame = np.load(self.files[i])
+        edgify = lambda C: -np.log(abs(C))
+        edgeVectorization = np.vectorize(edgify)
+        edges = edgeVectorization(frame)
+        return edges
+
+    def getNeighboringMatrixFileNames(self, i, n):
+        if i < n:
+            raise Exception("You goofed, you cannot have a window size which is larger than your"
+                            " initial vector")
+
+        neighbors = [self.files[fileIndex] for fileIndex in range(i - n, i + n)]
+
+        return neighbors
+
+    def getNeighboringMatrices(self, i, n):
+        neighbors = self.getNeighborsMatrixFileNames(i, n)
+        neighboringMatrices = [np.load(neighbor) for neighbor in neighbors]
+        return neighboringMatrices
+
+    def getMovingAverage(self, i, n):
+        neighboringMatrices = self.getNeighboringMatrices(i, n)
+        movingAverage = np.mean(neighboringMatrices, axis=0)
+
+        return movingAverage
+
+class residueNetwork:
+    def __init__(self, contactDF, pearsonFrameEdges):
+        contactDF.to_numpy()
+        self.networkMatrix = np.array(contactDF*pearsonFrameEdges)
+
+        # Create an empty graph
+        G = nx.Graph()
+
+        # Add nodes
+        for i in range(len(self.networkMatrix)):
+            G.add_node(i)
+
+
+        # Add weighted edges
+        for i in range(len(self.networkMatrix)):
+            for j in range(i + 1, len(self.networkMatrix[i])):
+                weight = self.networkMatrix[i][j]
+                if weight > 0:
+                    G.add_edge(i, j, weight=weight)
+
+        self.network = G
+
+    def draw(self):
+        pos = nx.spring_layout(self.network)
+        nx.draw(self.network, pos, with_labels=True, node_color='purple', font_weight='bold')
+        plt.show()
+
+    def drawCircle(self):
+        pos = nx.circular_layout(self.network)
+        nx.draw(self.network, pos, with_labels=True, node_color='purple')
+        plt.show()
+
+    def dijkstrasPath(self, startPoint, endPoint):
+        path = nx.dijkstra_path(self.network,
+                                startPoint, endPoint)
+        return path
+
+#Looking a little incomplete
+class VMDDNAoutput:
+    def __init__(self, contactDataFile):
+        self.contactDataFile = contactDataFile
+        self.contactMatrix = functions.parse_matrix_file(self.contactDataFile)
+
+        # Create an empty graph
+        G = nx.Graph()
+
+        # Add nodes
+        for i in range(len(self.contactMatrix)):
+            G.add_node(i)
+
+        self.network = G
+
+
 class AFMData:
     def __init__(self, filename, replicate):
         self.filename = filename
