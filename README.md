@@ -1,5 +1,11 @@
 # Steered Molecular Dynamics (SMD) for Topology Analysis
 
+## Dependencies
+- Python 3.9+
+- NumPy (`pip install numpy`)
+- MDAnalysis (`pip install MDAnalysis`)
+
+
 TODO: add references
 
 <h2 align="center">Detachment Modeling</h2>
