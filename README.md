@@ -18,6 +18,8 @@ The thinking for modeling detachments is analogous to statistical inference, any
   <img src="https://github.com/user-attachments/assets/bb707484-8067-4a82-8bc0-c1e96ca2b925" width="300">
 </div>
 
+If a residue acquires a p_value <= 0.05, it may be considered detached
+
 <h2 align="center">Dynamical Network Analysis</h2>
 
 <div align="center">
