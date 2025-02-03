@@ -46,7 +46,7 @@ That's why DNA is useful in SMD.
 </div>
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/a3fcbd41-d9a9-4bd4-8b87-33f8b282be3c" width="600">
+  <img src="https://github.com/user-attachments/assets/a3fcbd41-d9a9-4bd4-8b87-33f8b282be3c" width="300">
 </div>
 
 <div align="center">
