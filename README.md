@@ -22,18 +22,25 @@ This github provides a set of analytical routines for analyzing steered molecula
 
 ```
 cd VMDroutines
-vmd -e ssFinderResID.tcl /path/to/*pdb /path/to/*psf /path/to/*dcd /path/to/secondaryStructure.txt
+vmd -e ssFinderResID.tcl /path/to/*pdb /path/to/*psf /path/to/*dcd /path/to/secondaryStructure_resID.txt
 ```
 or
 ```
-vmd -e ssFinderResidue.tcl /path/to/*pdb /path/to/*psf /path/to/*dcd /path/to/secondaryStructure.txt
+vmd -e ssFinderResidue.tcl /path/to/*pdb /path/to/*psf /path/to/*dcd /path/to/secondaryStructure_residue.txt
 ```
 
 <div align="center">
   <video src="https://github.com/user-attachments/assets/ba0f12cc-8e1c-47e9-8cea-70e6ae93aa1b" controls></video>
 </div>
 
-The thinking for modeling detachments is analogous to statistical inference, anytime a set of residues associated with a secondary structure is about μ +/- 2σ. This parameterization is arbitrary, so I encourage tinkering with the "p_value" parameter. The default critical values are displayed as the black lines in this visualization. The assumption of normally distributed residues along a certain axis breaks down as a protein denatures. 
+The thinking for modeling detachments is analogous to statistical inference, anytime a set of residues associated with a secondary structure is about μ +/- 2σ, it is detached. This parameterization is arbitrary, so I encourage tinkering with the "p_value" parameter. The default critical values are displayed as black lines in this visualization. The assumption of normally distributed residues along a certain axis breaks down as a protein denatures. 
+
+To access the secondary structures
+
+```
+frameStructure_0 = objects.frameStructure(path/to/initial*pdb, ssDataFileResnum, ssDataFileResidue)
+sStructures = frameStructure_0.getSecondaryStructures().copy()
+```
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/42d59615-e2e6-4c26-a563-911cf5512be0" width="500">
