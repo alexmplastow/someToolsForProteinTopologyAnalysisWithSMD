@@ -80,6 +80,10 @@ As can optimal and subpotimal paths, this makes much of networkx's analytical re
 ## Equation References
 [1] C. Bernardi, R. Bernardi and K. Schulten, "Mapping mechanical force propagation through biomolecular complexes," Nano Letters, vol. 15, no. 11, pp. 7370-7376, 2015. 
 
+[2] J. Berman, "Taming Information with Open Source Tools," in Data Simplification, ScienceDirect, 2016, pp. 135-187.
+
+
+
 
 <!--
 <p align="center">
