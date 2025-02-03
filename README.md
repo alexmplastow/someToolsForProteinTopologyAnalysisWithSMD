@@ -41,15 +41,15 @@ The thinking for modeling detachments is analogous to statistical inference, any
 
 If a residue acquires a p_value <= 0.05, it may be considered detached
 
-THIS IS A LITTLE ABRUPT, THINK ABOUT REWRITING FOR CLARITY
+To reproduce the visualization shown above:
 
-To access the secondary structures
+Access the secondary structures,
 
 ```
 frameStructure_0 = objects.frameStructure(path/to/initial*pdb, ssDataFileResnum, ssDataFileResidue)
 sStructures = frameStructure_0.getSecondaryStructures().copy()
 ```
-To reproduce the visualization shown above:
+Then loop through using either biopython or mdAnalysis generated PDBs
 
 ```
 for pdb in listOfPDBfilePaths:
