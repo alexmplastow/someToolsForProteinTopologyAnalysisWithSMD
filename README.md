@@ -10,6 +10,7 @@
   - Biopython
   - Glob
   - Tqdm
+- VMD
 
 <h2 align="center">Detachment Modeling</h2>
 
