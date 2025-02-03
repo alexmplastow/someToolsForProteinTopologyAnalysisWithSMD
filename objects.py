@@ -925,7 +925,7 @@ class frameStructure:
         return alphaHelixObjects + betaSheetObjects
 
     def frame_SSr_DebugRoutine(self, chainName = "X", i = 0, p_value = 0.05,
-                               saveDir = "/home/alpal/projects/SMD/gaussianIntegralPaperCode/debugTmp"):
+                               saveDir = "./tmp"):
         
         #Generating the usual nuts and bolts of p(z)
         zDistribution = self.zAxisProjection(chainName = chainName)
