@@ -27,7 +27,7 @@ DNA is handy for determining the path along which force most easily propagates.
   <img src="https://github.com/user-attachments/assets/617e7802-0984-42a4-aa8a-56438de133af" width="200">
 </div>
 
-The force will easily propagate if the cross-correlation between two particles is small. A less mathematical description than the equation above is that those portions of a protein that are highly correlated with each other are being pulled about by their neighbors, but those particles that are weakly correlated with each other are the path along which force is propagating and therefore primarily determine the dynamics of the macromolecule.
+The force will easily propagate if the cross-correlation between two particles is small. A less mathematical description than the equation above is that those portions of a protein that are highly correlated with each other are being pulled about by their neighbors, but those particles that are weakly correlated with each other are the path along which force is propagating and determine the dynamics of the macromolecule.
 
 That's why DNA is useful in SMD.
 
