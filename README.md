@@ -27,7 +27,7 @@ Dyanmical network analysis is handy for determining the path along which force m
   <img src="https://github.com/user-attachments/assets/617e7802-0984-42a4-aa8a-56438de133af" width="200">
 </div>
 
-The force will easily propagate if the cross-correlation between two particles is small. A less mathematical description than the equation above is that those portions of a protein that are highly correlated with each other are being pulled about by their neighbors, but those particles which are weakly correlated with eachother are the path along which force is propagating and therefore primarily determine the dynamics of the macromolecule.
+The force will easily propagate if the cross-correlation between two particles is small. A less mathematical description than the equation above is that those portions of a protein that are highly correlated with each other are being pulled about by their neighbors, but those particles that are weakly correlated with each other are the path along which force is propagating and therefore primarily determine the dynamics of the macromolecule.
 
 <div align="center">
   <video src="https://github.com/user-attachments/assets/b5b90ecd-8686-4bb7-8d27-652fe73412cb" controls></video>
