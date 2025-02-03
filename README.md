@@ -49,6 +49,13 @@ To access the secondary structures
 frameStructure_0 = objects.frameStructure(path/to/initial*pdb, ssDataFileResnum, ssDataFileResidue)
 sStructures = frameStructure_0.getSecondaryStructures().copy()
 ```
+To reproduce the visualization shown above:
+
+```
+for pdb in listOfPDBfilePaths:
+    frameStructure = objects.frameStructure(pdb, ssDataFileResnum, ssDataFileResidue)
+    frameStructure.frame_SSr_DebugRoutine(i = i, p_value = p_value)
+```
 
 <h2 align="center">Dynamical Network Analysis (DNA)</h2>
 
