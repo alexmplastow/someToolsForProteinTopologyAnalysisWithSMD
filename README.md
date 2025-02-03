@@ -24,7 +24,7 @@ If a residue acquires a p_value <= 0.05, it may be considered detached
 Dyanmical network analysis is handy for determining the path along which force most easily propagates.
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/617e7802-0984-42a4-aa8a-56438de133af" width="500">
+  <img src="https://github.com/user-attachments/assets/617e7802-0984-42a4-aa8a-56438de133af" width="200">
 </div>
 
 
