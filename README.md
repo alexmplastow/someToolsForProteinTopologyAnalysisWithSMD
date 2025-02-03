@@ -1,5 +1,7 @@
 # Steered Molecular Dynamics (SMD) for Topology Analysis
 
+## Detachment Modeling
+
 <div align="center">
   <video src="https://github.com/user-attachments/assets/96f636e1-e06d-456f-8585-ca0ca591b162" controls></video>
 </div>
@@ -10,6 +12,8 @@ This github provides a set of analytical routines for analyzing steered molecula
 </div>
 
 The thinking for modeling detachments is analogous to statistical inference, anytime a set of residues associated with a secondary structure is about μ +/- 2σ. This parameterization is arbitrary, so I encourage tinkering with the "p_value" parameter. The default critical values are displayed as the black lines in this visualization. The assumption of normally distributed residues along a certain axis breaks down as a protein denatures. 
+
+##Dynamical Network Analysis
 
 <div align="center">
   <video src="https://github.com/user-attachments/assets/b5b90ecd-8686-4bb7-8d27-652fe73412cb" controls></video>
