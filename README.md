@@ -55,7 +55,7 @@ That's why DNA is useful in SMD.
   <small>[2]</small>
 </div>
 
-ρ is the pearson correlation of the gradient for any two particles. Particle pairs with a high ρ are more likely to moving as a consequence of eachother than particle pairs with a low ρ. To rule out correlations which result from sheer dumb luck, contacts can be identified.
+ρ is the Pearson correlation of the gradient for any two particles. Particle pairs with a high ρ are more likely to moving as a consequence of each other than particle pairs with a low ρ. To rule out correlations that result from sheer dumb luck, contacts can be identified.
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/6c56fabc-1a2b-4f81-846f-6381da1efe0c" width="900">
@@ -65,7 +65,7 @@ That's why DNA is useful in SMD.
   <img src="https://github.com/user-attachments/assets/a3fcbd41-d9a9-4bd4-8b87-33f8b282be3c" width="300">
 </div>
 
-In the VMD implementation, contacts are defined as particles that are within 4.5 Å of each other for 75% of the trajectory which is analyzed. Matrix V is defined as 1 if there is a contact and 0 if any two residue are not contacting.
+In the VMD implementation, contacts are defined as particles that are within 4.5 Å of each other for 75% of the trajectory which is analyzed [3]. Matrix V is defined as 1 if there is a contact and 0 if any two residue are not contacting.
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/64faa79e-5e98-40bc-bb90-87cd9eb70b5b" width="600">
@@ -83,6 +83,8 @@ As can optimal and subpotimal paths, this makes much of networkx's analytical re
 [1] C. Bernardi, R. Bernardi and K. Schulten, "Mapping mechanical force propagation through biomolecular complexes," Nano Letters, vol. 15, no. 11, pp. 7370-7376, 2015. 
 
 [2] J. Berman, "Taming Information with Open Source Tools," in Data Simplification, ScienceDirect, 2016, pp. 135-187.
+
+[3] J. Eargle, Z. Luthey-Schulten and A. Sethi, "Dynamical Network Analysis," NIH Resource for Macromolecular Modeling and Bioinformatics, Urbana, Illinois, 2012.
 
 
 
