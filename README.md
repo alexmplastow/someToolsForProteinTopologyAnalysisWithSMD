@@ -49,7 +49,7 @@ Access the secondary structures,
 frameStructure_0 = objects.frameStructure(path/to/initial*pdb, ssDataFileResnum, ssDataFileResidue)
 sStructures = frameStructure_0.getSecondaryStructures().copy()
 ```
-Then loop through using either biopython or mdAnalysis generated PDBs
+Then loop through using either biopython or MDAnalysis generated PDBs
 
 ```
 for pdb in listOfPDBfilePaths:
