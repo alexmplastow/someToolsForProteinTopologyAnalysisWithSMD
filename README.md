@@ -1,3 +1,5 @@
+# Steered Molecular Dynamics (SMD) for Topology Analysis
+
 <div align="center">
   <video src="https://github.com/user-attachments/assets/96f636e1-e06d-456f-8585-ca0ca591b162" controls></video>
 </div>
