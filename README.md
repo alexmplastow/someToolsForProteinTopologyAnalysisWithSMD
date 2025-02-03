@@ -13,6 +13,11 @@ This github provides a set of analytical routines for analyzing steered molecula
 
 The thinking for modeling detachments is analogous to statistical inference, anytime a set of residues associated with a secondary structure is about μ +/- 2σ. This parameterization is arbitrary, so I encourage tinkering with the "p_value" parameter. The default critical values are displayed as the black lines in this visualization. The assumption of normally distributed residues along a certain axis breaks down as a protein denatures. 
 
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/bb707484-8067-4a82-8bc0-c1e96ca2b925" width="600">
+</div>
+
 <h2 align="center">Dynamical Network Analysis</h2>
 
 <div align="center">
