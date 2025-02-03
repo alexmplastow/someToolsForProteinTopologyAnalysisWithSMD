@@ -1,5 +1,7 @@
 # Steered Molecular Dynamics (SMD) for Topology Analysis
 
+This github provides a set of analytical routines for analyzing steered molecular dynamics (SMD) simulation. It contains CLIs and a library of objects which are useful for analyzing detachment events of secondary structures and a pure-python implementation for Dynamical Network Analysis (DNA). I'd recommend relying on the library of objects for regular python users who have an intuition for how objects work in python and the CLI interface for everyone else.
+
 ## Dependencies
 - Python 3.12+
   - NumPy
@@ -11,8 +13,6 @@
   - Glob
   - Tqdm
 - VMD
-
-This github provides a set of analytical routines for analyzing steered molecular dynamics (SMD) simulation. It contains CLIs and a library of objects which are useful for analyzing detachment events of secondary structures and a pure-python implementation for Dynamical Network Analysis (DNA). I'd recommend relying on the library of objects for regular python users who have an intuition for how objects work in python and the CLI interface for everyone else.
 
 <h2 align="center">Detachment Modeling</h2>
 
