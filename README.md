@@ -51,7 +51,7 @@ That's why DNA is useful in SMD.
   <img src="https://github.com/user-attachments/assets/a3fcbd41-d9a9-4bd4-8b87-33f8b282be3c" width="300">
 </div>
 
-In the VMD implementation, contacts are defined as particles that are within 4.5 Å of each other for 75% of the trajectory which is analyzed.
+In the VMD implementation, contacts are defined as particles that are within 4.5 Å of each other for 75% of the trajectory which is analyzed. Matrix V is defined as 1 if there is a contact and 0 if any two residue are not contacting.
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/64faa79e-5e98-40bc-bb90-87cd9eb70b5b" width="600">
