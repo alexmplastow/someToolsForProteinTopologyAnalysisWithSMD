@@ -75,6 +75,10 @@ The resulting network, G, can be visualized in VMD.
 
 As can optimal and subpotimal paths, this makes much of networkx's analytical reliability compatable with VMD, particularly in cases where the clusters become bimodal.
 
+## Equation References
+[1] C. Bernardi, R. Bernardi and K. Schulten, "Mapping mechanical force propagation through biomolecular complexes," Nano Letters, vol. 15, no. 11, pp. 7370-7376, 2015. 
+
+
 <!--
 <p align="center">
   <img src="https://github.com/user-attachments/assets/6c56fabc-1a2b-4f81-846f-6381da1efe0c" width="600">
