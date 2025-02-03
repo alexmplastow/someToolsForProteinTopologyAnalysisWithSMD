@@ -2,8 +2,8 @@
 
 ## Dependencies
 - Python 3.12+
-- NumPy
-- MDAnalysis
+  - NumPy
+  - MDAnalysis
 
 <h2 align="center">Detachment Modeling</h2>
 
