@@ -12,6 +12,8 @@
   - Tqdm
 - VMD
 
+This github provides a set of analytical routines for analyzing steered molecular dynamics (SMD) simulation. It contains CLIs and a library of objects which are useful for analyzing detachment events of secondary structures and a pure-python implementation for Dynamical Network Analysis (DNA). I'd recommend relying on the library of objects for regular python users who have an intuition for how objects work in python and the CLI interface for everyone else.
+
 <h2 align="center">Detachment Modeling</h2>
 
 <div align="center">
@@ -27,8 +29,6 @@ or
 vmd -e ssFinderResidue.tcl /path/to/*pdb /path/to/*psf /path/to/*dcd /path/to/secondaryStructure.txt
 ```
 
-
-This github provides a set of analytical routines for analyzing steered molecular dynamics (SMD) simulation. It contains CLIs and a library of objects which are useful for analyzing detachment events of secondary structures and a pure-python implementation for Dynamical Network Analysis (DNA). I'd recommend relying on the library of objects for regular python users who have an intuition for how objects work in python and the CLI interface for everyone else.
 <div align="center">
   <video src="https://github.com/user-attachments/assets/ba0f12cc-8e1c-47e9-8cea-70e6ae93aa1b" controls></video>
 </div>
