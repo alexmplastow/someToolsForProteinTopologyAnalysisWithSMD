@@ -35,18 +35,20 @@ vmd -e ssFinderResidue.tcl /path/to/*pdb /path/to/*psf /path/to/*dcd /path/to/se
 
 The thinking for modeling detachments is analogous to statistical inference, anytime a set of residues associated with a secondary structure is about μ +/- 2σ, it is detached. This parameterization is arbitrary, so I encourage tinkering with the "p_value" parameter. The default critical values are displayed as black lines in this visualization. The assumption of normally distributed residues along a certain axis breaks down as a protein denatures. 
 
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/42d59615-e2e6-4c26-a563-911cf5512be0" width="500">
+</div>
+
+If a residue acquires a p_value <= 0.05, it may be considered detached
+
+THIS IS A LITTLE ABRUPT, THINK ABOUT REWRITING FOR CLARITY
+
 To access the secondary structures
 
 ```
 frameStructure_0 = objects.frameStructure(path/to/initial*pdb, ssDataFileResnum, ssDataFileResidue)
 sStructures = frameStructure_0.getSecondaryStructures().copy()
 ```
-
-<div align="center">
-  <img src="https://github.com/user-attachments/assets/42d59615-e2e6-4c26-a563-911cf5512be0" width="500">
-</div>
-
-If a residue acquires a p_value <= 0.05, it may be considered detached
 
 <h2 align="center">Dynamical Network Analysis (DNA)</h2>
 
