@@ -57,9 +57,13 @@ In the VMD implementation, contacts are defined as particles that are within 4.5
   <img src="https://github.com/user-attachments/assets/64faa79e-5e98-40bc-bb90-87cd9eb70b5b" width="600">
 </div>
 
+The resulting network, G, can be visualized in VMD.
+
 <div align="center">
   <img src="https://github.com/user-attachments/assets/8574cfa2-e13f-4575-9f34-0c23d8fca0b3" width="600">
 </div>
+
+As can optimal and subpotimal paths, this makes much of networkx's analytical reliability compatable with VMD, particularly in cases where the clusters become bimodal.
 
 <!--
 <p align="center">
