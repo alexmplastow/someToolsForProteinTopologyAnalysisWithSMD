@@ -15,7 +15,7 @@ The thinking for modeling detachments is analogous to statistical inference, any
 
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/bb707484-8067-4a82-8bc0-c1e96ca2b925" width="600">
+  <img src="https://github.com/user-attachments/assets/bb707484-8067-4a82-8bc0-c1e96ca2b925" width="400">
 </div>
 
 <h2 align="center">Dynamical Network Analysis</h2>
