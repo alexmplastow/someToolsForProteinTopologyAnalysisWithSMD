@@ -81,7 +81,7 @@ That's why DNA is useful in SMD.
   <small>[2]</small>
 </div>
 
-ρ is the Pearson correlation of the gradient for any two particles. Particle pairs with a high ρ are more likely to moving as a consequence of each other than particle pairs with a low ρ. To rule out correlations that result from sheer dumb luck, contacts can be identified.
+ρ is the Pearson correlation of the gradient for any two particles. Particle pairs with a high ρ are more likely to move as a consequence of each other than particle pairs with a low ρ. To rule out correlations that result from sheer dumb luck, contacts can be identified.
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/6c56fabc-1a2b-4f81-846f-6381da1efe0c" width="900">
