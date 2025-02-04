@@ -1087,6 +1087,41 @@ class simulationAsPDBs:
 
                 raise Exception("SOTP")
 
+class pearsonCorrelationTensor:
+    def __init__(self, pathToNumpyFiles):
+        self.dir = pathToNumpyFiles
+        self.files = functions.sortFilePaths(glob(f"{self.dir}/*npy"))
+
+    def getFrame(self, i):
+        return np.load(self.files[i])
+
+    def getFrameEdges(self, i):
+        frame = np.load(self.files[i])
+        edgify = lambda C: -np.log(abs(C))
+        edgeVectorization = np.vectorize(edgify)
+        edges = edgeVectorization(frame)
+        return edges
+
+    def getNeighboringMatrixFileNames(self, i, n):
+        if i < n:
+            raise Exception("You goofed, you cannot have a window size which is larger than your"
+                            " initial vector")
+
+        neighbors = [self.files[fileIndex] for fileIndex in range(i - n, i + n)]
+
+        return neighbors
+
+    def getNeighboringMatrices(self, i, n):
+        neighbors = self.getNeighborsMatrixFileNames(i, n)
+        neighboringMatrices = [np.load(neighbor) for neighbor in neighbors]
+        return neighboringMatrices
+
+    def getMovingAverage(self, i, n):
+        neighboringMatrices = self.getNeighboringMatrices(i, n)
+        movingAverage = np.mean(neighboringMatrices, axis=0)
+
+        return movingAverage
+
 #TODO: this class should probably be pulled
 class trajectoryDirWithForceExtension:
     def __init__(self, t, realpath, forceExtensionObject):
