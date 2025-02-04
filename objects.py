@@ -1234,19 +1234,163 @@ class residueNetwork:
         return path
 
 #Looking a little incomplete
+
 class VMDDNAoutput:
-    def __init__(self, contactDataFile):
-        self.contactDataFile = contactDataFile
-        self.contactMatrix = functions.parse_matrix_file(self.contactDataFile)
+    def __init__(self, contactCorrDataFile):
+        self.contactCorrDataFile = contactCorrDataFile
+        self.contactCorrMatrix = functions.parse_matrix_file(self.contactCorrDataFile)
+        with np.errstate(divide='ignore', invalid='ignore'):
+            edgeMatrix = -np.log(np.abs(self.contactCorrMatrix))
+        edgeMatrix[np.isinf(edgeMatrix)] = 0
+        self.edgeMatrix = edgeMatrix
 
         # Create an empty graph
         G = nx.Graph()
 
         # Add nodes
-        for i in range(len(self.contactMatrix)):
+        for i in range(len(self.edgeMatrix)):
             G.add_node(i)
 
+            # Add weighted edges
+        for i in range(len(self.edgeMatrix)):
+            for j in range(i + 1, len(self.edgeMatrix[i])):
+                weight = self.edgeMatrix[i][j]
+                if weight > 0:
+                    G.add_edge(i, j, weight=weight)
+
         self.network = G
+
+    def draw(self):
+        pos = nx.spring_layout(self.network)
+        nx.draw(self.network, pos, with_labels=True, node_color='purple', font_weight='bold')
+        plt.show()
+
+    def drawCircle(self, show=True, saveDir=None, title=None):
+        pos = nx.circular_layout(self.network)
+        plt.clf()
+        nx.draw(self.network, pos, with_labels=True, node_color='purple')
+
+        # Enforce square plot
+        plt.gca().set_aspect('equal', adjustable='box')
+        plt.axis('off')  # Turn off the axis
+
+
+        if show:
+            plt.show()
+        elif not show:
+            print("The code presumes if you don't show the figure, it must save it")
+            plt.title(title)
+            plt.savefig(f"{saveDir}/{title}.png")
+
+
+    def allSimplePaths(self, startingPoint, endingPoint):
+        paths = nx.all_shortest_paths(self.network,
+                                startingPoint, endingPoint)
+        return paths
+
+    def shortestPath(self, startingPoint, endingPoint):
+        path = nx.shortest_path(self.network,
+                            startingPoint, endingPoint)
+        return path
+    def generateNewContactDataFileWithScaling(self, scale=1):
+        matrix = scale*self.contactCorrMatrix
+        matrixAsString = functions.array_to_string(matrix)
+        header = open(self.contactCorrDataFile).readlines()[0]
+        file = header + matrixAsString
+        file = file.replace("0.0", "0")
+        with open(f"{self.contactCorrDataFile}.test.dat", "w") as corrFile:
+            corrFile.write(file)
+
+    def getConnectedComponents(self):
+        connectedComponents = nx.connected_components(self.network)
+        return connectedComponents
+
+    def getLargestConnectedComponent(self):
+        largest_cc = max(self.getConnectedComponents(), key=len)
+
+        self.minFromLargestCC = min(largest_cc)
+        self.maxFromLargestCC = max(largest_cc)
+
+        return largest_cc
+    
+    def getDegreeDistribution(self):
+        self.degreeDistribution = np.array([node[-1] for node in self.network.degree()])
+        return self.degreeDistribution
+
+    def getLargestConnectedComponentDegreeDistribution(self):
+        largest_cc = list(self.getLargestConnectedComponent())
+        self.getDegreeDistribution()
+        largest_ccDegreeDistribution = self.degreeDistribution[largest_cc]
+        return largest_ccDegreeDistribution
+
+class suboptimalPathFile:
+    def __init__(self, VMDDNA, leftResID, rightResID):
+        self.shortestDistance = ""
+        self.edgeLengthOffset = ""
+        self.suboptimalPathMax = ""
+        self.sources = leftResID
+        self.targets = rightResID
+        self.finalPaths = list(VMDDNA.allSimplePaths(leftResID, rightResID))
+        self.numberOfPaths = len(self.finalPaths)
+        self.residuesThatOccurMost = []
+        self.edgesThatOccurMost = []
+
+    def generate(self, saveDir):
+        shortestDistance = [f"The shortest distance is here {self.shortestDistance}"]
+        edgeLengthOffset = [f"The edge length offset is {self.edgeLengthOffset}"]
+        suboptimalPathMax = [f"Suboptimal paths will be no longer than {self.suboptimalPathMax}"]
+        sources = [f"The sources are: {self.sources}"]
+        targets = [f"The targets are: {self.targets}"]
+        finalPaths = ["The final paths are:"] + self.finalPaths
+        numberOfPaths = [f"Number of paths is {self.numberOfPaths}"]
+
+        residuesThatOccurMost = ([f"The residues that occur the most in the suboptimal paths are:"]
+                                 + self.residuesThatOccurMost)
+
+        edgesThatOccurMost = ([f"The edges that occur the most in the suboptimal paths are:"]
+                              + self.edgesThatOccurMost)
+
+
+        fileList = (shortestDistance + edgeLengthOffset + suboptimalPathMax + sources
+                    + targets + finalPaths + numberOfPaths + residuesThatOccurMost + edgesThatOccurMost)
+
+        with open(f"{saveDir}/network.out", "w") as file:
+            for item in fileList:
+                if isinstance(item, list):
+                    file.write(", ".join(map(str, item)) + "\n")
+                else:
+                    file.write(str(item) + "\n")
+
+        print("RANNNNNNNNNNNNNNNNNNNNNNNNNNN")
+
+
+class contactNetwork:
+    def __init__(self, contactDF):
+        contactArray = contactDF.to_numpy()
+
+        self.networkMatrix = contactArray
+
+        # Create an empty graph
+        G = nx.Graph()
+
+        # Add nodes
+        for i in range(len(self.networkMatrix)):
+            G.add_node(i)
+
+
+        # Add edges
+        for i in range(len(self.networkMatrix)):
+            for j in range(i + 1, len(self.networkMatrix[i])):
+                weight = self.networkMatrix[i][j]
+                if weight > 0:
+                    G.add_edge(i, j, weight=weight)
+
+        self.network = G
+
+    def getDegreeDistribution(self):
+        self.degreeDistribution = np.array([node[-1] for node in self.network.degree()])
+        return self.degreeDistribution
+
 
 
 class AFMData:
