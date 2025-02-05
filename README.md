@@ -57,6 +57,8 @@ for pdb in listOfPDBfilePaths:
     frameStructure.frame_SSr_DebugRoutine(i = i, p_value = p_value)
 ```
 
+This method can be used to identify detachments in SMD curves, if fitted to an atomic force microscopy (AFM) curve, this infers the detachment events which take place in experimental data. 
+
 <h2 align="center">Dynamical Network Analysis (DNA)</h2>
 
 DNA is handy for determining the path along which force most easily propagates.
