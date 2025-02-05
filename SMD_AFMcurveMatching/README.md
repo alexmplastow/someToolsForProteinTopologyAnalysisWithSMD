@@ -1,4 +1,6 @@
-![AFMrep9SMDrep1](https://github.com/user-attachments/assets/9f3e511f-5e83-4cc8-ab86-42cb6ad15838)
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/9f3e511f-5e83-4cc8-ab86-42cb6ad15838" width="500">
+</div>
 
 Optimizing these SMD-AFM curves is substantially harder than it looks. I'd recommend sticking to the CLI interface, even if you have solid programming knowledge. The output is just a numpy file that combines both AFM and SMD curves.
 
