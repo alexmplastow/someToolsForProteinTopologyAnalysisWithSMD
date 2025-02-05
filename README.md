@@ -63,6 +63,11 @@ This method can be used to identify detachments in SMD curves, if fitted to an a
   <img src="https://github.com/user-attachments/assets/e8255897-e432-4f70-b137-d0525fb22972" width="500">
 </div>
 
+This process for generating these curves is a little involved, but if one would rather skip the OOP approach, this curve can be generated via:
+```
+python analysis.py --force_extension_file /path/to/SMD-AFM/crossCorrelation.npy --trajectory_file path/to/trajectoryFile --topology_file path/to/topologyFile --ss_data_file_residue /path/to/secondaryStructure_resID.txt --ssDataFileResnum /path/to/secondaryStructure_resID.txt --plot
+```
+
 <h2 align="center">Dynamical Network Analysis (DNA)</h2>
 
 DNA is handy for determining the path along which force most easily propagates.
