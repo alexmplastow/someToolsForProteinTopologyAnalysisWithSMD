@@ -1,1 +1,5 @@
+![AFMrep9SMDrep1](https://github.com/user-attachments/assets/9f3e511f-5e83-4cc8-ab86-42cb6ad15838)
+
+Optimizing these SMD-AFM curves is substantially harder than it looks. I'd recommend sticking to the CLI interface, even if you have solid programming knowledge. The output is just a numpy file that combines both AFM and SMD curves.
+
 ![heatmap](https://github.com/user-attachments/assets/1622bb35-0854-4dd2-a957-add0bbe4c886)
