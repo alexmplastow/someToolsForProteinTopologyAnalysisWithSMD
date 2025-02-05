@@ -7,3 +7,7 @@ Optimizing these SMD-AFM curve fits is substantially harder than it looks. I'd r
 <div align="center">
   <img src="https://github.com/user-attachments/assets/1622bb35-0854-4dd2-a957-add0bbe4c886" width="500">
 </div>
+
+```
+python pearsonCorrelation.py --force_extension_dir "/path/to/force_extension_files" --afm_dir "/path/to/afm_files" --N 15 --plot --save_dir "/path/to/save_dir" --show_optimal_curve_pairing
+```
