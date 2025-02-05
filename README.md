@@ -59,9 +59,9 @@ for pdb in listOfPDBfilePaths:
 
 This method can be used to identify detachments in SMD curves, if fitted to an atomic force microscopy (AFM) curve, this infers the detachment events which take place in experimental data. 
 
-![itIsFinished](https://github.com/user-attachments/assets/e8255897-e432-4f70-b137-d0525fb22972)
-
-
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/e8255897-e432-4f70-b137-d0525fb22972" width="500">
+</div>
 
 <h2 align="center">Dynamical Network Analysis (DNA)</h2>
 
