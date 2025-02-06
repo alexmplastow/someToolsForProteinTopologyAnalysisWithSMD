@@ -134,6 +134,11 @@ network.generateVMDdynamicNetworkFile("path/to/saved/file")
 
 As can optimal and subpotimal paths, this makes much of networkx's analytical reliability compatable with VMD, particularly in cases where the clusters become bimodal.
 
+```
+minResidueIndex, maxResidueIndex = network.getLargestConnectedComponent()
+network.generateOptimalPathsFile(minResdiueIndex, maxResidueIndex, /path/to/saved/optimal/path/file)
+```
+
 <div align="center">
   <img src="https://github.com/user-attachments/assets/8574cfa2-e13f-4575-9f34-0c23d8fca0b3" width="600">
 </div>
