@@ -110,11 +110,24 @@ Note: I recognize converting the frames I analyze to PDBs is a little reckless. 
   <img src="https://github.com/user-attachments/assets/a3fcbd41-d9a9-4bd4-8b87-33f8b282be3c" width="300">
 </div>
 
-In the VMD implementation, contacts are defined as particles that are within 4.5 Å of each other for 75% of the trajectory which is analyzed [3]. Matrix V is defined as 1 if there is a contact and 0 if any two residue are not contacting.
+In the VMD implementation, contacts are defined as particles that are within 4.5 Å of each other for 75% of the trajectory which is analyzed [3]. Matrix V is defined as 1 if there is a contact and 0 if any two residue are not contacting. I was a little more careless with this step, sticking with a 9 Å cutoff in the initial frame
+
+```
+initialStructure = objects.frameStructure(/path/to/initial*pdb)
+contactDF = initialStructure.getContacts(cutoff=9)
+```
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/64faa79e-5e98-40bc-bb90-87cd9eb70b5b" width="600">
 </div>
+
+Retrieving the network is not complicated with the pearson tensor.
+
+```
+pearsonTensor = objects.pearsonCorrelationTensor(numpyDir)
+frameEdges = pearsonTensor.getFrameEdges(i)     
+network = objects.residueNetwork(contactDF, frameEdges)
+```
 
 The resulting network, G, can be visualized in VMD.
 
