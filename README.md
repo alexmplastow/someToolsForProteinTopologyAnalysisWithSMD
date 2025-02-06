@@ -126,6 +126,7 @@ The resulting network, G, can be visualized in VMD.
 pearsonTensor = objects.pearsonCorrelationTensor(numpyDir)
 frameEdges = pearsonTensor.getFrameEdges(i)     
 network = objects.residueNetwork(contactDF, frameEdges)
+network.generateVMDdynamicNetworkFile("path/to/saved/file")
 ```
 <div align="center">
   <img src="https://github.com/user-attachments/assets/64faa79e-5e98-40bc-bb90-87cd9eb70b5b" width="600">
