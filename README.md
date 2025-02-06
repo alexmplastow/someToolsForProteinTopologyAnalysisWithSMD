@@ -139,8 +139,6 @@ As can optimal and subpotimal paths, this makes much of networkx's analytical re
 minResidueIndex, maxResidueIndex = network.getLargestConnectedComponent()
 network.generateOptimalPathsFile(minResdiueIndex, maxResidueIndex, /path/to/saved/optimal/path/file)
 ```
-![optimalPath]()
-
 <div align="center">
   <img src="https://github.com/user-attachments/assets/4f709c66-3c47-4aff-8f31-4f4cfff523dc" width="600">
 </div>
