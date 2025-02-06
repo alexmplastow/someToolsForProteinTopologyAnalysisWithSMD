@@ -72,11 +72,6 @@ python analysis.py --force_extension_file /path/to/SMD-AFM/crossCorrelation.npy 
 
 DNA is handy for determining the path along which force most easily propagates.
 
-```
-simulationTrajectories = objects.simulationAsPDBs(PDBsDir)
-simulationTrajectories.savePearsonTensor(startTime, numpySaveDir)
-```
-Note: I recognize converting the frames I analyze to PDBs is a little reckless. Because I do not want such a computationally wasteful approach to be looked over by a prospective employer, I'll continue retooling the code
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/617e7802-0984-42a4-aa8a-56438de133af" width="200">
@@ -87,6 +82,13 @@ Note: I recognize converting the frames I analyze to PDBs is a little reckless. 
 The force will easily propagate if the cross-correlation between two particles is small. A less mathematical description is that those portions of a protein that are highly correlated with each other are being pulled about by their neighbors, but those particles that are weakly correlated with each other are the path along which force is propagating and determine the dynamics of the macromolecule.
 
 That's why DNA is useful in SMD.
+
+
+```
+simulationTrajectories = objects.simulationAsPDBs(PDBsDir)
+simulationTrajectories.savePearsonTensor(startTime, numpySaveDir)
+```
+Note: I recognize converting the frames I analyze to PDBs is a little reckless. Because I do not want such a computationally wasteful approach to be looked over by a prospective employer, I'll continue retooling the code
 
 <div align="center">
   <video src="https://github.com/user-attachments/assets/b5b90ecd-8686-4bb7-8d27-652fe73412cb" controls></video>
