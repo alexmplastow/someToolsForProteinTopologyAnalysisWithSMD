@@ -102,9 +102,7 @@ Note: I recognize converting the frames I analyze to PDBs is a little reckless. 
 
 ρ is the Pearson correlation of the gradient for any two particles. Particle pairs with a high ρ are more likely to move as a consequence of each other than particle pairs with a low ρ. To rule out correlations that result from sheer dumb luck, contacts can be identified.
 
-<div align="center">
-  <img src="https://github.com/user-attachments/assets/6c56fabc-1a2b-4f81-846f-6381da1efe0c" width="900">
-</div>
+
 
 Retrieving the network is not complicated with the pearson tensor.
 
@@ -118,25 +116,26 @@ In the VMD implementation, contacts are defined as particles that are within 4.5
 initialStructure = objects.frameStructure(/path/to/initial*pdb)
 contactDF = initialStructure.getContacts(cutoff=9)
 ```
-
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/64faa79e-5e98-40bc-bb90-87cd9eb70b5b" width="600">
+  <img src="https://github.com/user-attachments/assets/6c56fabc-1a2b-4f81-846f-6381da1efe0c" width="900">
 </div>
 
+The resulting network, G, can be visualized in VMD.
 
 ```
 pearsonTensor = objects.pearsonCorrelationTensor(numpyDir)
 frameEdges = pearsonTensor.getFrameEdges(i)     
 network = objects.residueNetwork(contactDF, frameEdges)
 ```
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/64faa79e-5e98-40bc-bb90-87cd9eb70b5b" width="600">
+</div>
 
-The resulting network, G, can be visualized in VMD.
+As can optimal and subpotimal paths, this makes much of networkx's analytical reliability compatable with VMD, particularly in cases where the clusters become bimodal.
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/8574cfa2-e13f-4575-9f34-0c23d8fca0b3" width="600">
 </div>
-
-As can optimal and subpotimal paths, this makes much of networkx's analytical reliability compatable with VMD, particularly in cases where the clusters become bimodal.
 
 ## Equation References
 [1] C. Bernardi, R. Bernardi and K. Schulten, "Mapping mechanical force propagation through biomolecular complexes," Nano Letters, vol. 15, no. 11, pp. 7370-7376, 2015. 
