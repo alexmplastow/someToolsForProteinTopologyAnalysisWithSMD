@@ -129,8 +129,9 @@ network = objects.residueNetwork(contactDF, frameEdges)
 network.generateVMDdynamicNetworkFile("path/to/saved/file")
 ```
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/64faa79e-5e98-40bc-bb90-87cd9eb70b5b" width="600">
+  <img src="https://github.com/user-attachments/assets/c9a373dd-44bb-45dd-af74-051f72fec709" width="600">
 </div>
+
 
 As can optimal and subpotimal paths, this makes much of networkx's analytical reliability compatable with VMD, particularly in cases where the clusters become bimodal.
 
