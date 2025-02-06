@@ -72,6 +72,12 @@ python analysis.py --force_extension_file /path/to/SMD-AFM/crossCorrelation.npy 
 
 DNA is handy for determining the path along which force most easily propagates.
 
+```
+simulationTrajectories = objects.simulationAsPDBs(PDBsDir)
+simulationTrajectories.savePearsonTensor(startTime, numpySaveDir)
+```
+Note: I recognize converting the frames I analyze to PDBs is a little reckless. Because I do not want such a computationally wasteful approach to be looked over by a prospective employer, I'll continue retooling the code
+
 <div align="center">
   <img src="https://github.com/user-attachments/assets/617e7802-0984-42a4-aa8a-56438de133af" width="200">
   <br>
