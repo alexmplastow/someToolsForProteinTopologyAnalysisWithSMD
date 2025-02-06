@@ -8,6 +8,8 @@ Optimizing these SMD-AFM curve fits is substantially harder than it looks. I'd r
   <img src="https://github.com/user-attachments/assets/1622bb35-0854-4dd2-a957-add0bbe4c886" width="500">
 </div>
 
+For each AFM dataset and each SMD dataset, some numpy file will be produced, but you will need to infer which is the best pairing. In this case, my fourth AFM replicate matches well with my third SMD replicate.
+
 ```
 python pearsonCorrelation.py --force_extension_dir "/path/to/force_extension_files" --afm_dir "/path/to/afm_files" --N 15 --plot --save_dir "/path/to/save_dir" --show_optimal_curve_pairing
 ```
