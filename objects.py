@@ -1268,6 +1268,12 @@ class residueNetwork:
                                 startPoint, endPoint)
         return path
 
+   def generateVMDoptimalPathsFile(self, startPoint, endPoint, savePath):
+       raise Exception("This method has not been configured yet")
+
+   def generateVMDdynamicNetworkFile(self, savePath):
+       raise Exception("This method has not been configured yet")
+
 #Looking a little incomplete
 
 class VMDDNAoutput:
