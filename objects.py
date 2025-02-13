@@ -1268,18 +1268,18 @@ class residueNetwork:
                                 startPoint, endPoint)
         return path
 
-   def generateVMDoptimalPathsFile(self, startPoint, endPoint, savePath):
-       raise Exception("This method has not been configured yet")
+    def generateVMDoptimalPathsFile(self, startPoint, endPoint, savePath):
+        raise Exception("This method has not been configured yet")
 
-   def generateVMDdynamicNetworkFile(self, savePath):
-       raise Exception("This method has not been configured yet")
+    def generateVMDdynamicNetworkFile(self, savePath):
+        raise Exception("This method has not been configured yet")
 
-   def getLargestConnectedComponent(self)
-       if True:
-           raise Exception("This method has not been configured yet")
+    def getLargestConnectedComponent(self):
+        if True:
+            raise Exception("This method has not been configured yet")
 
-       else:
-           return 0, 100
+        else:
+            return 0, 100
 
     
 
