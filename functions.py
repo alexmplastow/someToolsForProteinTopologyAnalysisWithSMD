@@ -14,6 +14,10 @@ import pandas as pd
 import re
 import csv
 
+def findClosestValueIndex(vector, value):
+    closest_index = min(range(len(vector)), key=lambda i: abs(vector[i] - value))
+    return closest_index
+
 def histogramFit(hist, binEdges):
 
     # Function to fit a Gaussian PDF
