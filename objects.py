@@ -441,6 +441,24 @@ class forceExtension:
         zDataTypes.update(np.unique(self.z.dtype))
         return zDataTypes
 
+    def setZtoOrigin(self):
+        zMin = min(self.z)
+        self.z = self.z - zMin
+
+    def returnCumulativeFreeEnergy(self):
+       
+        ΣΔG = 0
+        ΣΔGs = np.array([])
+
+        for i, z in tqdm(enumerate(self.z)):
+            if i + 1 < len(self.z):
+                ΣΔG += self.AUC([self.z[i], self.z[i+1]])
+                ΣΔGs = np.append(ΣΔGs, ΣΔG)
+            else:
+                continue
+        return self.z[:-1], ΣΔGs
+        
+
 class zDistribution:
     def __init__(self, residue_z_dict):
         self.residue_z_dict = residue_z_dict
