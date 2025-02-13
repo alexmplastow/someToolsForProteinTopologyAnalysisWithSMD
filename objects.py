@@ -457,6 +457,27 @@ class forceExtension:
             else:
                 continue
         return self.z[:-1], ΣΔGs
+
+    #This is just the force extension curve 🤦
+    def return_dCumulativeFreeEnergy(self):
+
+        Z, ΣΔGs = self.returnCumulativeFreeEnergy()
+        dΣΔGs = np.array([]) 
+
+        for i in range(0, len(ΣΔGs)):
+            if i < len(ΣΔGs) - 1:
+                
+                z_1, g_1 = Z[i], ΣΔGs[i]
+                z_2, g_2 = Z[i + 1], ΣΔGs[i + 1]
+
+                Δz = z_2 - z_1
+                ΔG = g_2 - g_1
+
+                dΔG = ΔG/Δz 
+                dΣΔGs = np.append(dΣΔGs, dΔG)
+
+        
+        return Z[:-1], dΣΔGs 
         
 
 class zDistribution:
@@ -1708,4 +1729,6 @@ class crossCorrelationFit:
             
     
        
+#TODO: substitute for a more computationally efficient data type
+        #Z_ΣΔGs = list(zip(Z, ΣΔGs))
 
