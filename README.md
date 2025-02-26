@@ -34,11 +34,7 @@ vmd -e ssFinderResidue.tcl /path/to/*pdb /path/to/*psf /path/to/*dcd /path/to/se
   <video src="https://github.com/user-attachments/assets/1d32d7ca-0619-4d14-889d-f75f2769105f" controls></video>
 </div>
 
-I added a routine for handling bimodal cases as well
 
-<div align="center">
-  <video src="https://github.com/user-attachments/assets/bd7fe807-965b-43c2-bd35-9bb2f4c3ecf0" controls></video>
-</div>
 
 The thinking for modeling detachments is analogous to statistical inference, anytime a set of residues associated with a secondary structure is about μ +/- 2σ, it is detached. This parameterization is arbitrary, so I encourage tinkering with the "p_value" parameter. The default critical values are displayed as black lines in this visualization. The assumption of normally distributed residues along a certain axis breaks down as a protein denatures. 
 
@@ -47,6 +43,12 @@ The thinking for modeling detachments is analogous to statistical inference, any
 </div>
 
 If a residue acquires a p_value <= 0.05, it may be considered detached
+
+I added a routine for handling bimodal cases as well
+
+<div align="center">
+  <video src="https://github.com/user-attachments/assets/bd7fe807-965b-43c2-bd35-9bb2f4c3ecf0" controls></video>
+</div>
 
 To reproduce the visualization shown above:
 
