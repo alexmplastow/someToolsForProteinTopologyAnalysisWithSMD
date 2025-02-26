@@ -533,16 +533,17 @@ class zDistribution:
         hist = np.array([max(discreteValueCount - subtraction, 0) for discreteValueCount in hist])
         return hist, binEdges
 
-    def histogramFit(self, subtraction = 2):
+    def histogramFit(self, subtraction = 2, bimodal = False):
         hist, bins = self.histogramTransformationWithSubtraction(
-            normalize=True, subtraction=subtraction)
-
-        gaussianX, gaussianY = functions.histogramFit(hist, bins)
-
+                     normalize=True, subtraction=subtraction)
+              
+        gaussianX, gaussianY = functions.histogramFit(hist = hist, binEdges = bins, bimodal = bimodal)
+        
         return gaussianX, gaussianY
 
-    def criticalValues(self, p_value=0.05):
-        gaussianX, gaussianY = self.histogramFit()
+    #TODO: make sure all histogram fits are adapted to take bimodal situations into consideration
+    def criticalValues(self, p_value=0.05, bimodal=False):
+        gaussianX, gaussianY = self.histogramFit(subtraction = 2, bimodal = bimodal)
 
         #I'm making the somewhat heavy-handed supposition that
             # all values of x are qually spaced apart
@@ -963,15 +964,16 @@ class frameStructure:
 
         return alphaHelixObjects + betaSheetObjects
 
-    def frame_SSr_DebugRoutine(self, chainName = "X", i = 0, p_value = 0.05,
+    def frame_SSr_DebugRoutine(self, chainName = "X", i = 0, p_value = 0.05, bimodal=False,
                                saveDir = "./tmp"):
-        
+
         #Generating the usual nuts and bolts of p(z)
         zDistribution = self.zAxisProjection(chainName = chainName)
         hist, binEdges = zDistribution.histogramTransformationWithSubtraction()
-        gaussianX, gaussianY = zDistribution.histogramFit()
+        gaussianX, gaussianY = zDistribution.histogramFit(subtraction = 2, bimodal = bimodal)
 
         plt.clf()
+        plt.style.use('dark_background')
 
         ssObjects = self.getSecondaryStructures()
         for ssObject in ssObjects:
@@ -984,9 +986,9 @@ class frameStructure:
             plt.text(r_z, plt.gca().get_ylim()[1] * 0.9, 
                      label, color=color, fontsize=10, horizontalalignment='left')
 
-        leftCrit, rightCrit = zDistribution.criticalValues(p_value = p_value)
-        plt.axvline(x=leftCrit, color='black', linewidth=4)
-        plt.axvline(x=rightCrit, color='black', linewidth=4)
+        leftCrit, rightCrit = zDistribution.criticalValues(p_value = p_value, bimodal = bimodal)
+        plt.axvline(x=leftCrit, color='white', linewidth=4)
+        plt.axvline(x=rightCrit, color='white', linewidth=4)
         
         plt.title(f'Debug frame {i}')
         plt.bar(binEdges, hist)

@@ -18,19 +18,34 @@ def findClosestValueIndex(vector, value):
     closest_index = min(range(len(vector)), key=lambda i: abs(vector[i] - value))
     return closest_index
 
-def histogramFit(hist, binEdges):
-
+def histogramFit(hist, binEdges, bimodal=False):
     # Function to fit a Gaussian PDF
     def gaussian_pdf(x, mean, std_dev, amplitude):
         return amplitude * norm.pdf(x, mean, std_dev)
 
+    #A bimodal distribution appeared in SopE2s case
+    def bimodalGaussian_pdf(x, μ_1, σ_1, A_1, μ_2, σ_2, A_2):
+        gauss1 = A_1 * np.exp(-((x - μ_1) ** 2) / (2 * σ_1 ** 2)) / np.sqrt(2 * np.pi * σ_1 ** 2)
+        gauss2 = A_2 * np.exp(-((x - μ_2) ** 2) / (2 * σ_2 ** 2)) / np.sqrt(2 * np.pi * σ_2 ** 2)
+
+        return gauss1 + gauss2
+
     # Fit the Gaussian PDF to the histogram data
-    p0 = [np.mean(binEdges), np.std(binEdges), np.max(hist)]  # Initial guess for parameters
-    params, covariance = curve_fit(gaussian_pdf, binEdges, hist, p0=p0, maxfev=100000)
+    if not bimodal:
+        p0 = [np.mean(binEdges), np.std(binEdges), np.max(hist)]
+        params, covariance = curve_fit(gaussian_pdf, binEdges, hist, p0=p0, maxfev=100000)
+    else:
+        p0 = [np.mean(binEdges), np.std(binEdges), np.max(hist), np.mean(binEdges), np.std(binEdges), np.max(hist)]
+        params, covariance = curve_fit(bimodalGaussian_pdf, binEdges, hist, p0=p0, maxfev=100000)
+
+
 
     #Returning our vectors of interest
     X = np.linspace(min(binEdges), max(binEdges), 100)
-    Y = gaussian_pdf(X, *params)
+    if not bimodal:
+        Y = gaussian_pdf(X, *params)
+    else:
+        Y = bimodalGaussian_pdf(X, *params)
 
     return X, Y
 
