@@ -61,7 +61,7 @@ sStructures = frameStructure_0.getSecondaryStructures().copy()
 Then loop through using either biopython or MDAnalysis generated PDBs
 
 ```
-for pdb in listOfPDBfilePaths:
+for i,pdb in enumerate(listOfPDBfilePaths):
     frameStructure = objects.frameStructure(pdb, ssDataFileResnum, ssDataFileResidue)
     frameStructure.frame_SSr_DebugRoutine(i = i, p_value = p_value)
 ```
