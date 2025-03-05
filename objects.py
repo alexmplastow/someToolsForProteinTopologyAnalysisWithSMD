@@ -581,7 +581,7 @@ class secondaryStructure:
         self.ssDetachmentPoint = None
         self.ssDetachmentFrame = None
 
-    def isDetached(self, zAxisProjection, p = 0.05):
+    def isDetached(self, zAxisProjection, p = 0.05, bimodal = False):
         zTransformation = self.resIDs
         residueLocationDict = zAxisProjection.residue_z_dict
         residueKeys = []
@@ -594,7 +594,7 @@ class secondaryStructure:
                             for residueKey in residueKeys]
 
         leftCriticalValue, rightCriticalValue = zAxisProjection.\
-            criticalValues(p_value= p )
+            criticalValues(p_value = p, bimodal = bimodal)
 
         def isOutsideCriticalValues(residueLocation,
                                    leftCriticalValue,

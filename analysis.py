@@ -27,6 +27,7 @@ def main(args):
     p_value = float(args.p_value)
     AFMconversion = args.disable_afm_conversion
     plot = args.plot
+    bimodal = args.bimodal
     
     if pdbRegen:
         #Collecting the frame to be used in the analysis
@@ -72,7 +73,7 @@ def main(args):
 
             for sStructure in sStructures:
 
-                if sStructure.isDetached(zAxisProjection, p = p_value):
+                if sStructure.isDetached(zAxisProjection, p = p_value, bimodal = args.bimodal):
        
                     if sStructure.ssDetachmentPoint == None:
                         sStructure.ssDetachmentPoint = float(smdVelocity)*i*DCDsamplingResolution
@@ -139,6 +140,7 @@ if __name__ == "__main__":
     parser.add_argument("--p_value", type=float, default=0.01, help="P-value for detachment analysis.")
     parser.add_argument("--disable_afm_conversion", action="store_false", help="Convert AFM data scaling.")
     parser.add_argument("--plot", action="store_true", help="Plot the heatmap of SMD-AFM correlations.")
-    
+    parser.add_argument("--bimodal", action="store_true", help="Assume the residue distribution is bimodal")
+
     args = parser.parse_args()
     main(args)
