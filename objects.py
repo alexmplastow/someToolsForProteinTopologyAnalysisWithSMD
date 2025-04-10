@@ -999,6 +999,25 @@ class frameStructure:
         plt.ylim(0, 1)
         plt.savefig(f'{saveDir}/debugFrame{i}.png')
 
+    def getDistances(self):
+        distanceDF = functions.calculate_residue_distance_and_build_csv(self.pathToPDB)
+        return distanceDF
+
+
+    def getContacts(self, cutoff=9):
+        distanceDF = self.getDistances()
+
+        def isCutoff(xy):
+            if xy <= cutoff:
+                return 1
+            elif xy > cutoff:
+                return 0
+
+
+        contactDF = distanceDF.applymap(isCutoff)
+
+        return contactDF
+
 
 class movingResidue:
     def __init__(self, biopythonResidue, t, expectedPosition = np.array([0.00, 0.00, 0.00]),
