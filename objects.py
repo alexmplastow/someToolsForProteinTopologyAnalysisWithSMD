@@ -856,12 +856,14 @@ class frameStructure:
         structure = p.get_structure(chainName, self.pathToPDB)
         chains = structure.get_chains()
         
+         
         for chain in chains:
             if chain.id == chainName:
                 proteinChain = chain
                 break
 
         residues = proteinChain.get_residues()
+        
         return residues
 
     def getPullingLength(self):
@@ -1058,16 +1060,45 @@ class residuePair:
         D_ij = np.divide(self.M_ij, M_diagonal_square_sqrt)
         return D_ij
 
+    def getPearsonCorrelation(self):
+        self.getNormalizedCorrelationMatrix()
+        P = np.sum(np.diagonal(self.D_ij))
+        self.P = P
+        return P
+
+    #TODO: update this function to reflect your generalized cross correlation solution
+    def getCrossCorrelation(self):
+        self.residue_i.differentiateResidue()
+        self.residue_j.differentiateResidue()
+
+        d_r_i =  self.residue_i.position_d
+        d_r_j =  self.residue_j.position_d
+
+        r_ij_dot = np.dot(d_r_i, d_r_j)
+
+        r_i_norm = np.sqrt(np.linalg.norm(d_r_i)**2)
+        r_j_norm = np.sqrt(np.linalg.norm(d_r_j)**2)
+
+        crossCorrelation = r_ij_dot/(r_i_norm * r_j_norm)
+
+        self.crossCorrelation = crossCorrelation
+        return crossCorrelation
+
 #I rather dislike this analytical approach, oh well, consider it a cautionary tale
 	#for future projects, I'll need to stick with PDBs until further notice
 class simulationAsPDBs:
-    def __init__(self, allSimStructureDir):
+    def __init__(self, allSimStructureDir, chainName = 'A'):
         self.allSimStructureDir = allSimStructureDir
+        self.chainName = chainName
+
+    def getPDBs(self):
+        PDBs = sorted(glob.glob(f"{self.allSimStructureDir}/*pdb"))
+        return PDBs
 
     def getDynamicalAnalysisFrame(self, t, tau = 5 ):
         if t < tau:
-            raise Exception("You goofed, you can't probe the expected value before"\
-                            "the simulation started")
+            raise Exception("You goofed, you can't probe the expected value before"
+                            " the simulation started")
         else:           
             PDBs = sorted(glob.glob(f"{self.allSimStructureDir}/*pdb"))
             PDBsToAnalyze = PDBs[t-tau:t]
@@ -1080,11 +1111,15 @@ class simulationAsPDBs:
             return structuresToAnalyze
     def getExpectedPositions(self, t, getFinalPositions = True):
         structuresToAnalyze = self.getDynamicalAnalysisFrame(t)
+
+
+        #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        #THIS IS THE OFFENDING LINE, YOU MUST FIX THE GETRESIDUES_SHORTCUT
         myResidues = [movingResidue(biopythonResidue, t) for biopythonResidue in
-                        structuresToAnalyze[0].getResidues_shortcut()]
+                        structuresToAnalyze[0].getResidues_shortcut(chainName = self.chainName)]
         for structure in structuresToAnalyze:
             
-            frameResidues = structure.getResidues_shortcut()
+            frameResidues = structure.getResidues_shortcut(chainName = self.chainName)
             
             for myResidue, biopythonResidue in zip(myResidues, frameResidues):
                 #TODO: it's a little sloppy to have repetative code, but not especially problematic
@@ -1096,12 +1131,11 @@ class simulationAsPDBs:
             myResidue.expectedPosition = myResidue.expectedPosition / self.tau
 
         if getFinalPositions:
-            tResidues = structuresToAnalyze[-1].getResidues_shortcut()
+            tResidues = structuresToAnalyze[-1].getResidues_shortcut(chainName = self.chainName)
 
             for myResidue, biopythonResidue in zip(myResidues, tResidues):
                 CA = next((atom for atom in biopythonResidue.get_atoms() if atom.name == "CA"))
                 myResidue.tPosition = np.array(CA.coord)
-
 
         return myResidues
 
@@ -1146,6 +1180,28 @@ class simulationAsPDBs:
                 print(residue_ij.getNormalizedCorrelationMatrix())
 
                 raise Exception("SOTP")
+
+    def getDynamicCrossCorrelationMatrix(self, t):
+
+        residuePairs_ij = self.pairResidues(t)
+        n = len(residuePairs_ij)
+        correlation_matrix = np.zeros((n, n))  # Preallocate matrix
+
+        for i in range(n):
+            for j in range(n):
+                correlation_matrix[i, j] = residuePairs_ij[i][j].getCrossCorrelation()
+
+        return correlation_matrix
+
+    def savePearsonTensor(self, startTime, numpySaveDir):
+        PDBs = self.getPDBs()
+        for i, PBD in tqdm(enumerate(PDBs)):
+            if i < startTime:
+                continue
+            else:
+                correlationMatrix = self.getDynamicCrossCorrelationMatrix(t=i)
+                np.save(f"{numpySaveDir}/frame_{i}.npy", correlationMatrix)
+
 
 class pearsonCorrelationTensor:
     def __init__(self, pathToNumpyFiles):
@@ -1259,7 +1315,7 @@ class trajectoryDirWithForceExtension:
 class pearsonCorrelationTensor:
     def __init__(self, pathToNumpyFiles):
         self.dir = pathToNumpyFiles
-        self.files = functions.sortFilePaths(glob(f"{self.dir}/*npy"))
+        self.files = functions.sortFilePaths(glob.glob(f"{self.dir}/*npy"))
 
     def getFrame(self, i):
         return np.load(self.files[i])
