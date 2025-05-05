@@ -92,12 +92,19 @@ The force will easily propagate if the cross-correlation between two particles i
 
 That's why DNA is useful in SMD.
 
+To generate the pearson tensor numpy files, execute:
 
 ```
-simulationTrajectories = objects.simulationAsPDBs(PDBsDir)
-simulationTrajectories.savePearsonTensor(startTime, numpySaveDir)
+sim = objects.simulationAsPDBs(f"../tmp", chainName = chainName)
+sim.savePearsonTensor(startTime, "../tmp")
 ```
-Note: I recognize converting the frames I analyze to PDBs is a little reckless. Because I do not want such a computationally wasteful approach to be looked over by a prospective employer, I'll continue retooling the code
+Now you can initialize the tensor once more with:
+
+```
+pearsonCorrelationTensor = objects.pearsonCorrelationTensor("../tmp")
+```
+
+Note: I recognize converting the frames I analyze to PDBs is a little reckless. Because I do not want such a computationally wasteful approach to be looked over by a prospective employer, I'll continue retooling the code. On the other hand, it is handy to have a shared data structure between the method for finding the optimal path and the method for characterizing the unfolding sequence
 
 <div align="center">
   <video src="https://github.com/user-attachments/assets/b5b90ecd-8686-4bb7-8d27-652fe73412cb" controls></video>
