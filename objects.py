@@ -10,6 +10,7 @@ from scipy.stats import linregress
 import glob
 from tqdm import tqdm
 import functions
+import networkx as nx
 import pickle
 import math
 import os
@@ -1207,6 +1208,8 @@ class pearsonCorrelationTensor:
     def __init__(self, pathToNumpyFiles):
         self.dir = pathToNumpyFiles
         self.files = functions.sortFilePaths(glob(f"{self.dir}/*npy"))
+        print(self.files)
+        raise Exception("SOTP")
 
     def getFrame(self, i):
         return np.load(self.files[i])
@@ -1337,7 +1340,8 @@ class pearsonCorrelationTensor:
         return neighbors
 
     def getNeighboringMatrices(self, i, n):
-        neighbors = self.getNeighborsMatrixFileNames(i, n)
+        #neighbors = self.getNeighborsMatrixFileNames(i, n)
+        neighbors = self.getNeighboringMatrixFileNames(i, n)
         neighboringMatrices = [np.load(neighbor) for neighbor in neighbors]
         return neighboringMatrices
 
@@ -1347,6 +1351,46 @@ class pearsonCorrelationTensor:
 
         return movingAverage
 
+class suboptimalPathFile:
+   def __init__(self, residueNetwork, leftResID, rightResID):
+       self.shortestDistance = ""
+       self.edgeLengthOffset = ""
+       self.suboptimalPathMax = ""
+       self.sources = residueNetwork.minFromLargestCC
+       self.targets = residueNetwork.maxFromLargestCC
+       #TODO adapt this
+       self.finalPaths = list(residueNetwork.allSimplePaths(leftResID, rightResID))
+       self.numberOfPaths = len(self.finalPaths)
+       self.residuesThatOccurMost = []
+       self.edgesThatOccurMost = []
+
+   def generate(self, saveFilePath):
+       shortestDistance = [f"The shortest distance is here {self.shortestDistance}"]
+       edgeLengthOffset = [f"The edge length offset is {self.edgeLengthOffset}"]
+       suboptimalPathMax = [f"Suboptimal paths will be no longer than {self.suboptimalPathMax}"]
+       sources = [f"The sources are: {self.sources}"]
+       targets = [f"The targets are: {self.targets}"]
+       finalPaths = ["The final paths are:"] + self.finalPaths
+       numberOfPaths = [f"Number of paths is {self.numberOfPaths}"]
+
+       residuesThatOccurMost = ([f"The residues that occur the most in the suboptimal paths are:"]
+                                + self.residuesThatOccurMost)
+
+       edgesThatOccurMost = ([f"The edges that occur the most in the suboptimal paths are:"]
+                             + self.edgesThatOccurMost)
+
+
+       fileList = (shortestDistance + edgeLengthOffset + suboptimalPathMax + sources
+                    + targets + finalPaths + numberOfPaths + residuesThatOccurMost + edgesThatOccurMost)
+
+       with open(saveFilePath, "w") as file:
+           for item in fileList:
+               if isinstance(item, list):
+                   file.write(", ".join(map(str, item)) + "\n")
+               else:
+                   file.write(str(item) + "\n")
+
+       
 class residueNetwork:
     def __init__(self, contactDF, pearsonFrameEdges):
         contactDF.to_numpy()
@@ -1384,20 +1428,38 @@ class residueNetwork:
                                 startPoint, endPoint)
         return path
 
-    def generateVMDoptimalPathsFile(self, startPoint, endPoint, savePath):
-        raise Exception("This method has not been configured yet")
+    def getConnectedComponents(self):
+        connectedComponents = nx.connected_components(self.network)
+        return connectedComponents
 
-    def generateVMDdynamicNetworkFile(self, savePath):
-        raise Exception("This method has not been configured yet")
+    #The function will return the largest connected component cluster, but from an 
+         #OOP standpoint, it seems more organic to add the minimal and maximal values
+         #as attributes
+    def getLargestConnectedComponents(self):
+        largest_cc = max(self.getConnectedComponents(), key=len)
 
-    def getLargestConnectedComponent(self):
-        if True:
-            raise Exception("This method has not been configured yet")
+        self.minFromLargestCC = min(largest_cc)
+        self.maxFromLargestCC = max(largest_cc)
 
-        else:
-            return 0, 100
+        return largest_cc
 
-    
+    def allSimplePaths(self, startingPoint, endingPoint):
+        paths = nx.all_shortest_paths(self.network,
+                                startingPoint, endingPoint)
+        return paths
+
+    def shortestPath(self, startingPoint, endingPoint):
+        path = nx.shortest_path(self.network,
+                            startingPoint, endingPoint)
+        return path
+
+    def generateVMDoptimalPathsFile(self, savePath):
+        self.getLargestConnectedComponents()
+        suboptimalPathObj = suboptimalPathFile(self, self.minFromLargestCC, self.maxFromLargestCC)
+        suboptimalPathObj.generate(savePath)
+
+    #TODO: add a routine for generating the suboptimal paths
+  
 
 #Looking a little incomplete
 
@@ -1488,47 +1550,6 @@ class VMDDNAoutput:
         self.getDegreeDistribution()
         largest_ccDegreeDistribution = self.degreeDistribution[largest_cc]
         return largest_ccDegreeDistribution
-
-class suboptimalPathFile:
-    def __init__(self, VMDDNA, leftResID, rightResID):
-        self.shortestDistance = ""
-        self.edgeLengthOffset = ""
-        self.suboptimalPathMax = ""
-        self.sources = leftResID
-        self.targets = rightResID
-        self.finalPaths = list(VMDDNA.allSimplePaths(leftResID, rightResID))
-        self.numberOfPaths = len(self.finalPaths)
-        self.residuesThatOccurMost = []
-        self.edgesThatOccurMost = []
-
-    def generate(self, saveDir):
-        shortestDistance = [f"The shortest distance is here {self.shortestDistance}"]
-        edgeLengthOffset = [f"The edge length offset is {self.edgeLengthOffset}"]
-        suboptimalPathMax = [f"Suboptimal paths will be no longer than {self.suboptimalPathMax}"]
-        sources = [f"The sources are: {self.sources}"]
-        targets = [f"The targets are: {self.targets}"]
-        finalPaths = ["The final paths are:"] + self.finalPaths
-        numberOfPaths = [f"Number of paths is {self.numberOfPaths}"]
-
-        residuesThatOccurMost = ([f"The residues that occur the most in the suboptimal paths are:"]
-                                 + self.residuesThatOccurMost)
-
-        edgesThatOccurMost = ([f"The edges that occur the most in the suboptimal paths are:"]
-                              + self.edgesThatOccurMost)
-
-
-        fileList = (shortestDistance + edgeLengthOffset + suboptimalPathMax + sources
-                    + targets + finalPaths + numberOfPaths + residuesThatOccurMost + edgesThatOccurMost)
-
-        with open(f"{saveDir}/network.out", "w") as file:
-            for item in fileList:
-                if isinstance(item, list):
-                    file.write(", ".join(map(str, item)) + "\n")
-                else:
-                    file.write(str(item) + "\n")
-
-        print("RANNNNNNNNNNNNNNNNNNNNNNNNNNN")
-
 
 class contactNetwork:
     def __init__(self, contactDF):
