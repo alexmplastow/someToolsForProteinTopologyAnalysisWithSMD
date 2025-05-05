@@ -136,24 +136,17 @@ contactDF = initialStructure.getContacts(cutoff=9)
   <img src="https://github.com/user-attachments/assets/6c56fabc-1a2b-4f81-846f-6381da1efe0c" width="900">
 </div>
 
-The resulting network, G, can be visualized in VMD.
+The resulting optimal path of network, G, can be visualized in VMD.
 
 ```
-pearsonTensor = objects.pearsonCorrelationTensor(numpyDir)
-frameEdges = pearsonTensor.getFrameEdges(i)     
-network = objects.residueNetwork(contactDF, frameEdges)
-network.generateVMDdynamicNetworkFile("path/to/saved/file")
-```
-<div align="center">
-  <img src="https://github.com/user-attachments/assets/c9a373dd-44bb-45dd-af74-051f72fec709" width="600">
-</div>
+pearsonCorrelationTensor = objects.pearsonCorrelationTensor("../tmp")
+fileIndices = range(0, len(glob.glob(f"../tmp/*npy")))
 
-
-As can optimal and subpotimal paths, this makes much of networkx's analytical reliability compatable with VMD, particularly in cases where the clusters become bimodal.
-
-```
-minResidueIndex, maxResidueIndex = network.getLargestConnectedComponent()
-network.generateOptimalPathsFile(minResdiueIndex, maxResidueIndex, /path/to/saved/optimal/path/file)
+for i in tqdm.tqdm(fileIndices[startTime:]):
+    frameEdges = pearsonCorrelationTensor.getFrameEdges(i)
+    network = objects.residueNetwork(contactDF, frameEdges)
+    #TODO: the graph is completely connected, we should have many suboptimal paths
+    network.generateVMDoptimalPathsFile(vmdOptPathFileName)
 ```
 <div align="center">
   <img src="https://github.com/user-attachments/assets/4f709c66-3c47-4aff-8f31-4f4cfff523dc" width="600">
