@@ -224,6 +224,25 @@ class forceExtension:
             self.F = F
         return z, t, F
 
+    #Note: because decorators are a biotch to use in practice, I'm forced
+        #Note: retool this code manually
+    def setMinDistance(self, newMin, redefineAttributes = True):
+
+        zMinIndex = functions.findClosestValueIndex(self.z, newMin)
+        z = self.z[zMinIndex:]
+        t = self.t[zMinIndex:]
+        F = self.F[zMinIndex:]
+
+        if len(z) != len(t) or len(z) != len(F) or len(F) != len(t):
+            raise Exception("One of the lengths is mismatched, I've screwed up")
+
+
+        if redefineAttributes:
+            self.z = z
+            self.t = t
+            self.F = F
+        return z, t, F
+
     def findPeaks(self, prominance=25, width=10, plot=False):
 
         widthInSamples = len(self.shortenMaxDistance(width, redefineAttributes=False)[0])
