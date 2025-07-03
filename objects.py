@@ -497,7 +497,14 @@ class forceExtension:
                 dΣΔGs = np.append(dΣΔGs, dΔG)
 
         
-        return Z[:-1], dΣΔGs 
+        return Z[:-1], dΣΔGs
+    
+    def build_zFCSV(self, csvFileName):
+        df = pd.DataFrame({
+                'z (Å)':self.z,
+                'F (pN)':self.F
+            })
+        df.to_csv(csvFileName, index=False)
         
 
 class zDistribution:
@@ -584,7 +591,7 @@ class zDistribution:
 
         return leftCriticalValue, rightCriticalValue
 
-#TODO: this code would be slightly better if I could generate this
+    #TODO: this code would be slightly better if I could generate this
     #TODO: object directly from the appropriate file
     #TODO: but generating an instance of the structure
     #TODO: object will work for now
