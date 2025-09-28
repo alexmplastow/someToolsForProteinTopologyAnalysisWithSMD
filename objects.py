@@ -15,6 +15,7 @@ import pickle
 import math
 import os
 
+#TODO: find some way to generate the topology file needed for VMD
 
 #I found my code became slightly more concise this way
 vmdColors = {
@@ -1047,7 +1048,6 @@ class frameStructure:
 
         return contactDF
 
-
 class movingResidue:
     def __init__(self, biopythonResidue, t, expectedPosition = np.array([0.00, 0.00, 0.00]),
                  tPosition = np.array([0.00, 0.00, 0.00]), position_d = np.array([0.00, 0.00, 0.00])):
@@ -1419,6 +1419,7 @@ class suboptimalPathFile:
        
 class residueNetwork:
     def __init__(self, contactDF, pearsonFrameEdges):
+        self.contactDF = contactDF
         contactDF.to_numpy()
         self.networkMatrix = np.array(contactDF*pearsonFrameEdges)
 
@@ -1485,6 +1486,24 @@ class residueNetwork:
         suboptimalPathObj.generate(savePath)
 
     #TODO: add a routine for generating the suboptimal paths
+
+    #I'm almost certain it is just the contact matrix verbatum
+    def generateContactDataFile(self, outputFile = 'contact.dat'):
+        shebangSelection = 'name CA\n'
+        contactArrays = ''
+
+        print("This executed")	
+
+        for _, row in self.contactDF.iterrows():
+            row_list = row.tolist()
+            row_list = [str(entry) for entry in row_list]
+            contactArrays+=' '.join(row_list)
+            contactArrays+='\n'
+
+        output = shebangSelection + contactArrays
+
+        with open(outputFile, 'w') as f:
+            f.write(output)
   
 
 #Looking a little incomplete
