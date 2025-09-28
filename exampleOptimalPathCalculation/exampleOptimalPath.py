@@ -1,5 +1,5 @@
 import sys
-sys.path.append('/home/alpal/projects/SMD/gaussianIntegralPaperCode/githubClone6/someToolsForProteinTopologyAnalysisWithSMD')
+sys.path.append('/home/alpal/projects/SMD/gaussianIntegralPaperCode/githubClone8/someToolsForProteinTopologyAnalysisWithSMD')
 
 import objects
 import functions
@@ -18,15 +18,15 @@ import seaborn as sns
 #Parameters
 #######################################################################################################
 
-pdbFile = '/home/alpal/projects/SMD/gaussianIntegralPaperCode/githubClone6/someToolsForProteinTopologyAnalysisWithSMD/exampleFiles/trajData/dryChimera10_autopsf.pdb'
+pdbFile = '/home/alpal/projects/SMD/gaussianIntegralPaperCode/githubClone8/someToolsForProteinTopologyAnalysisWithSMD/exampleFiles/trajData/dryChimera10_autopsf.pdb'
 
-trajectoryFile = '/home/alpal/projects/SMD/gaussianIntegralPaperCode/githubClone6/someToolsForProteinTopologyAnalysisWithSMD/exampleFiles/trajData/WT700ns.chimera.10.RepNumber.5.nowat.dcd'
+trajectoryFile = '/home/alpal/projects/SMD/gaussianIntegralPaperCode/githubClone8/someToolsForProteinTopologyAnalysisWithSMD/exampleFiles/trajData/WT700ns.chimera.10.RepNumber.5.nowat.dcd'
 
 chainName = 'A'
 
 pdbRegen = False
 
-pearsonTensorRegen = False
+pearsonTensorRegen = True
 
 #NOTE: I would not recomend setting this to true unless you are prepared to eat up the RAM on your
     #NOTE: machine
@@ -35,6 +35,8 @@ visualizePearsonTensor = False
 #NOTE: you should make the analytical output resemble the old VMD approach closely
     #NOTE: you will need to distinguish between short paths and long paths with low correlations
 vmdOptPathFileName = 'VMDoptPath.txt'
+
+contactDataFileName = 'contact.dat'
 
 #######################################################################################################
 #Main
@@ -61,7 +63,7 @@ if pdbRegen:
 
 if pearsonTensorRegen:
     sim = objects.simulationAsPDBs(f"../tmp", chainName = chainName)
-    sim.savePearsonTensor(startTime, "../tmp")
+    sim.savePearsonTensor(startTime,f"../tmp")
 
 if visualizePearsonTensor:
 
@@ -85,5 +87,6 @@ fileIndices = range(0, len(glob.glob(f"../tmp/*npy")))
 for i in tqdm.tqdm(fileIndices[startTime:]):
     frameEdges = pearsonCorrelationTensor.getFrameEdges(i)   
     network = objects.residueNetwork(contactDF, frameEdges)
+    network.generateContactDataFile(contactDataFileName)
     #TODO: the graph is completely connected, we should have many suboptimal paths
     network.generateVMDoptimalPathsFile(vmdOptPathFileName) 
