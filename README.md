@@ -22,11 +22,11 @@ This github provides a set of analytical routines for analyzing steered molecula
 
 ```
 cd VMDroutines
-vmd -e ssFinderResID.tcl /path/to/*pdb /path/to/*psf /path/to/*dcd /path/to/secondaryStructure_resID.txt
+vmd -e ssFinderResID.tcl -args /path/to/*pdb /path/to/*psf /path/to/*dcd /path/to/secondaryStructure_resID.txt
 ```
 or
 ```
-vmd -e ssFinderResidue.tcl /path/to/*pdb /path/to/*psf /path/to/*dcd /path/to/secondaryStructure_residue.txt
+vmd -e ssFinderResidue.tcl -args /path/to/*pdb /path/to/*psf /path/to/*dcd /path/to/secondaryStructure_residue.txt
 ```
 
 
